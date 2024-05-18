@@ -9,7 +9,7 @@ class User
      * @param string $password
      * @return bool
      */
-    public function saveUser(Connect $connect, string $login, string $password): bool
+    public function saveUser(Connect $connect, string $login, string $password):bool
     {
         $password = password_hash($password, PASSWORD_DEFAULT);
         $query = 'INSERT INTO `users` (login, password) VALUES (:login, :password)';
@@ -25,7 +25,6 @@ class User
             return false;
         }
     }
-
     /**
      * user authentication check
      * @param Connect $connect
@@ -33,7 +32,7 @@ class User
      * @param string $password
      * @return bool
      */
-    public function authUser(Connect $connect, string $login, string $password): bool
+    public function authUser(Connect $connect, string $login, string $password):bool
     {
         $query = "SELECT * FROM `users` WHERE login = :login";
         $params = [
@@ -59,14 +58,14 @@ class User
      * completes user authentication
      * @return void
      */
-    public function logout(): void
+    public function logout():void
     {
         session_start();
-        session_unset();
-        session_destroy();
+        session_unset ();
+        session_destroy ();
         unset($_SESSION['user_id']);
         unset($_SESSION['login']);
-        header("Location: http://localhost:8000");
+        header ("Location: http://localhost:8000");
         exit();
     }
 }
