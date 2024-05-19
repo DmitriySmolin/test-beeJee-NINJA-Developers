@@ -8,4 +8,4 @@ return [
         'controller' => 'admin',
         'action' => 'edit',
     ],
-];a
+];

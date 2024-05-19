@@ -2,6 +2,8 @@
 
 namespace Models;
 
+use PDO;
+
 class Task
 {
     /**
@@ -44,11 +46,11 @@ class Task
      * @param string $descriptions
      * @return bool
      */
-    public function saveTask(Connect $connect, string $login, string $email, string $descriptions):bool
+    public function saveTask(Connect $connect, string $username, string $email, string $descriptions):bool
     {
-        $query = 'INSERT INTO `tasks` (login, email, descriptions) VALUES (:login, :email, :descriptions)';
+        $query = 'INSERT INTO `tasks` (username, email, descriptions) VALUES (:username, :email, :descriptions)';
         $params = [
-            ':login' => $login,
+            ':username' => $username,
             ':email' => $email,
             ':descriptions' => $descriptions
         ];
