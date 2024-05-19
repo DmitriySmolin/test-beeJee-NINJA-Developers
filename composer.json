@@ -1,5 +1,5 @@
 {
-  "name": "test-beeJee-NINJA-Developers",
+  "name": "",
   "autoload": {
     "psr-4": {
       "Models\\": "models/",
