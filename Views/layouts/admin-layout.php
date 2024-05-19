@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!$_SESSION['user_id']) {
+    header("Location: http://localhost:8000");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,14 +54,13 @@ session_start();
                     <input type="password" name="passwordForLogin" class="form-control" id="exampleInputForLogin">
                 </div>
                 <div class="col-auto">
-                    <?php if (isset($error['auth'])) {echo $error['auth'];} ?>
+                    <?php if (isset($error['auth'])) {print $error['auth'];} ?>
                     <button type="submit" class="btn btn-primary">Login</button>
                 </div>
             </form>
         </div>
         <div class="col">
             <?php if (isset($_SESSION['user_id'])) { ?>
-                <a class="btn btn-primary" href="http://localhost:8000/admin/" role="button">Administrative panel</a>
                 <a class="btn btn-danger" href="/logout" role="button">Logout</a>
             <?php } ?>
         </div>
@@ -69,29 +71,35 @@ session_start();
                 <thead>
                 <tr id="th1"><th colspan="4"><h2><?= $title ?></h2></th></tr>
                 <th>Admin editing</th>
-                <th><?php print $sortLinks->creatingSortLinks('Username', 'username_asc', 'username_desc', $page); ?></th>
-                <th><?php print $sortLinks->creatingSortLinks('Email', 'email_asc', 'email_desc', $page); ?></th>
-                <th><?php print $sortLinks->creatingSortLinks('Descriptions', 'descriptions_asc', 'descriptions_desc', $page); ?></th>
-                <th><?php print $sortLinks->creatingSortLinks('Implementation', 'implementation_asc', 'implementation_desc', $page); ?></th>
+                <th><?php print $sortLinks->creatingSortLinksForAdmin('Username', 'username_asc', 'username_desc', $page); ?></th>
+                <th><?php print $sortLinks->creatingSortLinksForAdmin('Email', 'email_asc', 'email_desc', $page); ?></th>
+                <th><?php print $sortLinks->creatingSortLinksForAdmin('Descriptions', 'descriptions_asc', 'descriptions_desc', $page); ?></th>
+                <th><?php print $sortLinks->creatingSortLinksForAdmin('Implementation', 'implementation_asc', 'implementation_desc', $page); ?></th>
                 </thead>
                 <tbody>
                 <?php foreach($data as $value) {?>
                     <tr>
-                        <td>
-                            <?php if (isset($value['edited'])) {print 'The task has been edited by an administrator.';} ?>
-                        </td>
-                        <td>
-                            <?= $value['username'] ?>
-                        </td>
-                        <td>
-                            <?= $value['email'] ?>
-                        </td>
-                        <td>
-                            <?= $value['descriptions'] ?>
-                        </td>
-                        <td>
-                            <?= $value['implementation'] ? $value['implementation'] : 'no set' ?>
-                        </td>
+                        <form method="POST" action="http://localhost:8000/admin/update">
+                            <td>
+                                <?php if (isset($value['edited'])) {print 'The task has been edited by an administrator.';} ?>
+                            </td>
+                            <td>
+                                <input type="hidden" name="id" value="<?= $value['id'] ?>">
+                                <input type="text" name="username" placeholder="<?= $value['username'] ?>">
+                            </td>
+                            <td>
+                                <input type="text" name="email" placeholder="<?= $value['email'] ?>">
+                            </td>
+                            <td>
+                                <textarea name="descriptions" placeholder="<?= $value['descriptions'] ?>"></textarea>
+                            </td>
+                            <td>
+                                <input type="number" step="1" min="0" max="1" name="implementation" placeholder="<?= $value['implementation'] ? $value['implementation'] : 'no set' ?>">
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </td>
+                        </form>
                     </tr>
                 <?php } ?>
                 </tbody>
@@ -99,7 +107,7 @@ session_start();
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <?php for ($i = 1; $i <= $countPages; $i++) { ?>
-                        <li class="page-item"><a class="page-link" href="http://localhost:8000/<?= $i ?>/sort=<?= $sort ?>"><?= $i ?></a></li>
+                        <li class="page-item"><a class="page-link" href="http://localhost:8000/admin/<?= $i ?>/sort=<?= $sort ?>"><?= $i ?></a></li>
                     <?php } ?>
                 </ul>
             </nav>

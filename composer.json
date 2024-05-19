@@ -1,0 +1,17 @@
+{
+  "name": "test-beeJee-NINJA-Developers",
+  "autoload": {
+    "psr-4": {
+      "Models\\": "models/",
+      "Controllers\\": "controllers/",
+      "Views\\": "views/"
+    }
+  },
+  "authors": [
+    {
+      "name": "DmitriySmolin",
+      "email": "neox56@gmail.com"
+    }
+  ],
+  "require": {}
+}
