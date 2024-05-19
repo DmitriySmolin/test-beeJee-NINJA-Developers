@@ -1,5 +1,7 @@
 <?php
 
+namespace Models;
+
 class Router {
 
     protected $routes = [];
@@ -49,7 +51,10 @@ class Router {
     public function run():void
     {
         if ($this->match()) {
-            print 'Routing works';
+            $path = 'Controllers\\'.ucfirst($this->params['controller']).'Controller';
+            $action = $this->params['action'];
+            $controller = new $path;
+            $controller->$action();
         } else {
             print 'Routing not works';
         }
