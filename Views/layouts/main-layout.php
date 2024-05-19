@@ -58,7 +58,32 @@ session_start();
         </div>
     </div>
     <div class="row row-cols-3">
-        <p>tasks</p>
+        <table id="tasks">
+            <thead>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Descriptions</th>
+            <th>Implementation</th>
+            </thead>
+            <tbody>
+            <?php foreach($data as $value) {?>
+                <tr>
+                    <td>
+                        <?= $value['username'] ?>
+                    </td>
+                    <td>
+                        <?= $value['email'] ?>
+                    </td>
+                    <td>
+                        <?= $value['descriptions'] ?>
+                    </td>
+                    <td>
+                        <?= $value['implementation'] ? $value['implementation'] : 'no set' ?>
+                    </td>
+                </tr>
+            <?php } ?>
+            </tbody>
+        </table>
     </div>
 </div>
 <script src="js/form.js"></script>
